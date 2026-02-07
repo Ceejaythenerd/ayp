@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Africa Youth Portal - Luminous Flow</title>
+
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Custom Animation for Blobs */
+        @keyframes blob-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+
+        .animate-blob {
+            animation: blob-bounce 10s infinite ease-in-out;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+
+        /* Hide scrollbar for horizontal scroll areas */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth View Transition */
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        purple: { 50: '#faf5ff', 100: '#f3e8ff', 500: '#a855f7', 600: '#9333ea', 900: '#581c87' },
+                        orange: { 50: '#fff7ed', 100: '#ffedd5', 500: '#f97316', 600: '#ea580c' },
+                        pink: { 50: '#fdf2f8', 100: '#fce7f3', 500: '#ec4899', 600: '#db2777' },
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="min-h-screen text-gray-900 bg-slate-50 relative selection:bg-purple-200 selection:text-purple-900 overflow-x-hidden">
+
+    <!-- Gradient Background Blobs -->
+    <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        <div
+            class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-300 rounded-full mix-blend-multiply filter blur-[128px] opacity-30 animate-blob">
+        </div>
+        <div
+            class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-orange-200 rounded-full mix-blend-multiply filter blur-[128px] opacity-30 animate-blob animation-delay-2000">
+        </div>
+        <div
+            class="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-pink-200 rounded-full mix-blend-multiply filter blur-[128px] opacity-30 animate-blob animation-delay-4000">
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header
+        class="sticky top-0 z-40 bg-white/70 backdrop-blur-md border-b border-white/50 px-6 py-4 flex justify-between items-center transition-all">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="switchView('home')">
+            <div
+                class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-orange-500 flex items-center justify-center text-white font-bold text-sm">
+                AY
+            </div>
+            <span class="font-bold text-gray-900 tracking-tight text-lg">AfricaYouth</span>
+        </div>
+
+        <div class="flex gap-4 items-center">
+            <div
+                class="hidden md:flex bg-gray-100/50 rounded-full px-4 py-2 items-center gap-2 border border-transparent focus-within:border-purple-300 focus-within:bg-white transition-all">
+                <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+                <input type="text" placeholder="Search portal..."
+                    class="bg-transparent outline-none text-sm w-48 placeholder-gray-400">
+            </div>
+            <button onclick="switchView('contribute')"
+                class="bg-gray-900 hover:bg-gray-800 text-white px-5 py-2 rounded-full text-sm font-bold transition-all hover:shadow-lg hover:shadow-purple-500/20 transform active:scale-95">
+                Submit
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="pb-32">
+
+        <!-- View: Home (Feed) -->
+        <section id="view-home" class="view-section active max-w-7xl mx-auto px-4 pt-8 fade-in">
+            <!-- Hero Welcome -->
+            <div class="text-center mb-12">
+                <h1
+                    class="text-5xl md:text-7xl font-bold mb-4 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600">
+                    The Pulse of Africa.
+                </h1>
+                <p class="text-xl text-gray-500 max-w-2xl mx-auto">
+                    Your daily stream of youth-led research, unfiltered opinions, and opportunities.
+                </p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex justify-center gap-2 mb-10 overflow-x-auto pb-2 no-scrollbar">
+                <button
+                    class="px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap bg-gray-900 text-white shadow-lg transform hover:scale-105 transition-all">All</button>
+                <button
+                    class="px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap bg-white border border-gray-100 text-gray-500 hover:border-gray-300 hover:text-gray-900 transition-all">Trending</button>
+                <button
+                    class="px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap bg-white border border-gray-100 text-gray-500 hover:border-gray-300 hover:text-gray-900 transition-all">Policy</button>
+                <button
+                    class="px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap bg-white border border-gray-100 text-gray-500 hover:border-gray-300 hover:text-gray-900 transition-all">Culture</button>
+                <button
+                    class="px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap bg-white border border-gray-100 text-gray-500 hover:border-gray-300 hover:text-gray-900 transition-all">Tech</button>
+            </div>
+
+            <!-- Masonry Layout -->
+            <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+
+                <!-- Item 1: Research -->
+                <div class="break-inside-avoid rounded-3xl overflow-hidden cursor-pointer group bg-white shadow-sm border border-gray-100 hover:-translate-y-2 transition-all duration-300"
+                    onclick="switchView('research')">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Gig Economy"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 left-4">
+                            <span
+                                class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-gray-900 border border-white/50">Economics</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">research</span>
+                            <i data-lucide="arrow-up-right"
+                                class="w-4 h-4 text-gray-300 group-hover:text-purple-500 transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 leading-tight text-gray-900">The Gig Economy: A Nairobi Case
+                            Study</h3>
+                        <div class="text-sm font-medium text-gray-500">K. Mensah</div>
+                    </div>
+                </div>
+
+                <!-- Item 2: Opinion (Tall) -->
+                <div
+                    class="break-inside-avoid rounded-3xl overflow-hidden cursor-pointer group bg-white shadow-sm border border-gray-100 hover:-translate-y-2 transition-all duration-300">
+                    <div class="relative overflow-hidden h-96">
+                        <img src="https://images.unsplash.com/photo-1629814361559-05244be8db96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Climate Justice"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 left-4">
+                            <span
+                                class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-gray-900 border border-white/50">Activism</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">opinion</span>
+                            <i data-lucide="arrow-up-right"
+                                class="w-4 h-4 text-gray-300 group-hover:text-purple-500 transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 leading-tight text-gray-900">Why I marched for climate justice
+                            in Kampala</h3>
+                        <div class="text-sm font-medium text-gray-500">Sarah O.</div>
+                    </div>
+                </div>
+
+                <!-- Item 3: Event (Dark) -->
+                <div
+                    class="break-inside-avoid rounded-3xl overflow-hidden cursor-pointer group bg-gray-900 text-white shadow-sm border border-gray-800 hover:-translate-y-2 transition-all duration-300">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-white/70">event</span>
+                            <i data-lucide="arrow-up-right"
+                                class="w-4 h-4 text-white group-hover:text-purple-500 transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 leading-tight text-white">Pan-African Dev Con 2025</h3>
+                        <div class="text-sm font-medium text-white/80">Live Tomorrow</div>
+                    </div>
+                </div>
+
+                <!-- Call to Action Card -->
+                <div class="break-inside-avoid rounded-3xl bg-gradient-to-br from-purple-900 to-indigo-900 text-white p-8 text-center relative overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-300"
+                    onclick="switchView('contribute')">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-purple-600 to-orange-600 opacity-0 group-hover:opacity-20 transition-opacity">
+                    </div>
+                    <i data-lucide="sparkles" class="w-8 h-8 mx-auto mb-4 text-yellow-400"></i>
+                    <h3 class="text-2xl font-bold mb-2">Your Voice Matters</h3>
+                    <p class="text-gray-300 mb-6 text-sm">Join 500+ young researchers contributing to the portal.</p>
+                    <button
+                        class="bg-white text-gray-900 px-6 py-2 rounded-full font-bold text-sm hover:scale-105 transition-transform">Start
+                        Writing</button>
+                </div>
+
+                <!-- Item 4: Research -->
+                <div class="break-inside-avoid rounded-3xl overflow-hidden cursor-pointer group bg-white shadow-sm border border-gray-100 hover:-translate-y-2 transition-all duration-300"
+                    onclick="switchView('research')">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Governance"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 left-4">
+                            <span
+                                class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-gray-900 border border-white/50">Policy</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">research</span>
+                            <i data-lucide="arrow-up-right"
+                                class="w-4 h-4 text-gray-300 group-hover:text-purple-500 transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 leading-tight text-gray-900">Digital Governance Frameworks
+                        </h3>
+                        <div class="text-sm font-medium text-gray-500">Dr. A. Nyerere</div>
+                    </div>
+                </div>
+
+                <!-- Item 5: Podcast -->
+                <div
+                    class="break-inside-avoid rounded-3xl overflow-hidden cursor-pointer group bg-white shadow-sm border border-gray-100 hover:-translate-y-2 transition-all duration-300">
+                    <div class="relative overflow-hidden h-80">
+                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Afro-Beats"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <div
+                                class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 group-hover:scale-110 transition-transform">
+                                <i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span
+                                class="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-gray-900 border border-white/50">Culture</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">podcast</span>
+                            <i data-lucide="arrow-up-right"
+                                class="w-4 h-4 text-gray-300 group-hover:text-purple-500 transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 leading-tight text-gray-900">Ep 4: The Future of Afro-Beats
+                        </h3>
+                        <div class="text-sm font-medium text-gray-500">45 min</div>
+                    </div>
+                </div>
+
+                <!-- Item 6: Text Only -->
+                <div
+                    class="break-inside-avoid rounded-3xl overflow-hidden cursor-pointer group bg-gradient-to-br from-purple-50 to-orange-50 p-8 border border-purple-100 hover:-translate-y-2 transition-all duration-300">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">research</span>
+                        <i data-lucide="arrow-up-right"
+                            class="w-4 h-4 text-gray-300 group-hover:text-purple-500 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 leading-tight text-gray-900">Youth Charter Review 2026</h3>
+                    <div class="text-sm font-medium text-gray-500 mb-4">Policy Unit</div>
+                    <span
+                        class="inline-block bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-900 border border-purple-100">Governance</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- View: Research -->
+        <section id="view-research" class="view-section max-w-5xl mx-auto px-4 pt-8 fade-in">
+            <div
+                class="bg-white rounded-[2rem] p-8 md:p-12 shadow-sm border border-gray-100 mb-8 relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 translate-x-1/2 -translate-y-1/2">
+                </div>
+                <div class="relative z-10">
+                    <h1 class="text-4xl font-bold mb-4">Research Repository</h1>
+                    <div class="flex flex-col md:flex-row gap-4 max-w-2xl">
+                        <div
+                            class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 flex items-center gap-3 focus-within:ring-2 focus-within:ring-purple-200 transition-all">
+                            <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+                            <input type="text" placeholder="Search for policy briefs, reports..."
+                                class="bg-transparent outline-none w-full text-gray-900">
+                        </div>
+                        <button
+                            class="bg-gray-900 text-white px-6 py-3 md:py-0 rounded-xl font-bold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="filter" class="w-5 h-5"></i>
+                            <span class="md:hidden">Filter</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Research Item 1 -->
+                <div
+                    class="group bg-white/60 backdrop-blur-sm border border-white/50 hover:border-purple-200 p-6 rounded-2xl flex items-center justify-between transition-all hover:shadow-lg hover:shadow-purple-900/5 cursor-pointer">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xs font-bold text-gray-900 border border-gray-100 group-hover:scale-110 transition-transform">
+                            PDF
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-purple-600 uppercase mb-1">Trade</div>
+                            <h3 class="font-bold text-gray-900 text-lg">Intra-African Trade Barriers</h3>
+                            <div class="text-xs text-gray-400">2.4 MB • Public Access</div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Research Item 2 -->
+                <div
+                    class="group bg-white/60 backdrop-blur-sm border border-white/50 hover:border-purple-200 p-6 rounded-2xl flex items-center justify-between transition-all hover:shadow-lg hover:shadow-purple-900/5 cursor-pointer">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xs font-bold text-gray-900 border border-gray-100 group-hover:scale-110 transition-transform">
+                            PDF
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-purple-600 uppercase mb-1">Health</div>
+                            <h3 class="font-bold text-gray-900 text-lg">Mental Health Policy 2025</h3>
+                            <div class="text-xs text-gray-400">1.1 MB • Public Access</div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Research Item 3 -->
+                <div
+                    class="group bg-white/60 backdrop-blur-sm border border-white/50 hover:border-purple-200 p-6 rounded-2xl flex items-center justify-between transition-all hover:shadow-lg hover:shadow-purple-900/5 cursor-pointer">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-xs font-bold text-gray-900 border border-gray-100 group-hover:scale-110 transition-transform">
+                            CSV
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-purple-600 uppercase mb-1">Energy</div>
+                            <h3 class="font-bold text-gray-900 text-lg">Renewable Energy Jobs Data</h3>
+                            <div class="text-xs text-gray-400">4.5 MB • Public Access</div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Voices -->
+        <section id="view-voices" class="view-section max-w-7xl mx-auto px-4 pt-8 fade-in">
+            <div class="grid md:grid-cols-2 gap-8 items-center mb-16">
+                <div>
+                    <span
+                        class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">Spotlight</span>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">"We are not waiting for the future."
+                    </h1>
+                    <p class="text-xl text-gray-500 mb-8">
+                        Meet the young activists reshaping the continent's digital landscape through open-source
+                        innovation.
+                    </p>
+                    <button
+                        class="bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform flex items-center gap-2">
+                        Read Full Story <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div class="relative">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-purple-400 to-orange-400 rounded-[2rem] rotate-3 opacity-20">
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                        alt="Activist"
+                        class="relative rounded-[2rem] shadow-2xl rotate-[-2deg] hover:rotate-0 transition-transform duration-500 w-full object-cover h-[500px]">
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Voice 1 -->
+                <div
+                    class="bg-white p-6 rounded-3xl border border-gray-100 hover:border-pink-200 transition-colors cursor-pointer group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+                            <img src="https://source.unsplash.com/random/100x100?face"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-gray-900">Amara K.</div>
+                            <div class="text-xs text-gray-400">Lagos, Nigeria</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        "The disconnect between policy frameworks and the reality on the ground is widening. We need
+                        localized data."
+                    </p>
+                    <div
+                        class="flex gap-2 text-pink-500 text-sm font-bold items-center group-hover:gap-3 transition-all">
+                        Read Op-Ed <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+
+                <!-- Voice 2 -->
+                <div
+                    class="bg-white p-6 rounded-3xl border border-gray-100 hover:border-pink-200 transition-colors cursor-pointer group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+                            <img src="https://source.unsplash.com/random/101x101?face"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-gray-900">David O.</div>
+                            <div class="text-xs text-gray-400">Accra, Ghana</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        "Digital sovereignty isn't just a buzzword. It's about owning the infrastructure that defines
+                        our economies."
+                    </p>
+                    <div
+                        class="flex gap-2 text-pink-500 text-sm font-bold items-center group-hover:gap-3 transition-all">
+                        Read Op-Ed <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+
+                <!-- Voice 3 -->
+                <div
+                    class="bg-white p-6 rounded-3xl border border-gray-100 hover:border-pink-200 transition-colors cursor-pointer group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+                            <img src="https://source.unsplash.com/random/102x102?face"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-gray-900">Zanele M.</div>
+                            <div class="text-xs text-gray-400">Cape Town, SA</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        "Art has always been political. In the digital age, our canvas is global and our message is
+                        instant."
+                    </p>
+                    <div
+                        class="flex gap-2 text-pink-500 text-sm font-bold items-center group-hover:gap-3 transition-all">
+                        Read Op-Ed <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Profile/Contribute (Modal Style) -->
+        <section id="view-contribute" class="view-section pt-8 fade-in">
+            <div class="min-h-[60vh] flex items-center justify-center">
+                <div
+                    class="bg-white/50 backdrop-blur-xl p-12 rounded-[2rem] border border-white shadow-xl text-center max-w-md mx-4 w-full">
+                    <div
+                        class="w-20 h-20 bg-gradient-to-tr from-purple-500 to-orange-500 rounded-full mx-auto mb-6 flex items-center justify-center text-white">
+                        <i data-lucide="user" class="w-10 h-10"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2 text-gray-900">Member Portal</h2>
+                    <p class="text-gray-500 mb-8">Sign in to track your submissions, save research, and connect with
+                        peers.</p>
+                    <button
+                        class="w-full bg-gray-900 text-white py-3 rounded-xl font-bold hover:scale-105 transition-transform mb-4">
+                        Connect Wallet / ID
+                    </button>
+                    <button onclick="switchView('home')" class="text-sm font-bold text-gray-400 hover:text-gray-900">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Navigation -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-auto">
+        <div
+            class="bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl shadow-purple-900/10 rounded-full px-2 py-2 flex gap-1">
+            <button onclick="switchView('home')" id="nav-home"
+                class="nav-btn bg-gray-900 text-white shadow-lg flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                <span class="font-bold text-sm">Feed</span>
+            </button>
+            <button onclick="switchView('research')" id="nav-research"
+                class="nav-btn text-gray-500 hover:bg-gray-100 hover:text-gray-900 flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300">
+                <i data-lucide="layers" class="w-5 h-5"></i>
+                <span class="font-bold text-sm hidden md:block">Research</span>
+            </button>
+            <button onclick="switchView('voices')" id="nav-voices"
+                class="nav-btn text-gray-500 hover:bg-gray-100 hover:text-gray-900 flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300">
+                <i data-lucide="mic-2" class="w-5 h-5"></i>
+                <span class="font-bold text-sm hidden md:block">Voices</span>
+            </button>
+            <button onclick="switchView('contribute')" id="nav-contribute"
+                class="nav-btn text-gray-500 hover:bg-gray-100 hover:text-gray-900 flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300">
+                <i data-lucide="user" class="w-5 h-5"></i>
+                <span class="font-bold text-sm hidden md:block">Profile</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        function switchView(viewId) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.remove('active');
+                el.classList.remove('fade-in'); // Remove animation class to reset it
+            });
+
+            // Show selected view with animation
+            const target = document.getElementById(`view-${viewId === 'profile' ? 'contribute' : viewId}`);
+            if (target) {
+                target.classList.add('active');
+                // Small timeout to re-trigger animation
+                setTimeout(() => target.classList.add('fade-in'), 10);
+            }
+
+            // Update Navigation State
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                // Reset to inactive style
+                btn.className = "nav-btn text-gray-500 hover:bg-gray-100 hover:text-gray-900 flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300";
+                // Hide label on mobile for inactive
+                const span = btn.querySelector('span');
+                if (span) span.className = "font-bold text-sm hidden md:block";
+            });
+
+            // Set active style
+            const activeBtn = document.getElementById(`nav-${viewId === 'profile' ? 'contribute' : viewId}`);
+            if (activeBtn) {
+                activeBtn.className = "nav-btn bg-gray-900 text-white shadow-lg scale-105 flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300";
+                const span = activeBtn.querySelector('span');
+                if (span) span.className = "font-bold text-sm block";
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Re-render icons just in case
+            lucide.createIcons();
+        }
+    </script>
+</body>
+
+</html>

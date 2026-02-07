@@ -3,10 +3,10 @@ import Hero from '../components/home/Hero';
 import MasonryGrid from '../components/home/MasonryGrid';
 import { BookOpen, Users, Globe, TrendingUp } from 'lucide-react';
 
-const categories = ['All', 'Trending', 'Policy', 'Culture', 'Tech'];
-
 const Home = () => {
-    const [activeFilter, setActiveFilter] = useState('All');
+    const [email, setEmail] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [subscribed, setSubscribed] = useState(false);
 
     // Impact stats data
     const stats = [
@@ -16,27 +16,24 @@ const Home = () => {
         { icon: TrendingUp, value: '50K+', label: 'Monthly Visitors' },
     ];
 
+    const handleNewsletterSubmit = async (e) => {
+        e.preventDefault();
+        if (!email.trim()) return;
+
+        setIsSubmitting(true);
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setIsSubmitting(false);
+        setSubscribed(true);
+        setEmail('');
+    };
+
     return (
         <div className="max-w-7xl mx-auto px-4 pt-8">
             <Hero />
 
-            {/* Filter Tabs */}
-            <div className="flex justify-center gap-2 mb-10 overflow-x-auto pb-2 no-scrollbar">
-                {categories.map((cat) => (
-                    <button
-                        key={cat}
-                        onClick={() => setActiveFilter(cat)}
-                        className={`px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-all ${activeFilter === cat
-                                ? 'bg-brand-navy text-white shadow-lg transform scale-105'
-                                : 'bg-white border border-gray-100 text-gray-500 hover:border-brand-cyan hover:text-brand-navy'
-                            }`}
-                    >
-                        {cat}
-                    </button>
-                ))}
-            </div>
-
-            <MasonryGrid filter={activeFilter} />
+            {/* Filterable Feed */}
+            <MasonryGrid />
 
             {/* Impact Stats Section */}
             <section className="mt-20 mb-12">
@@ -56,27 +53,41 @@ const Home = () => {
             </section>
 
             {/* Newsletter CTA */}
-            <section className="bg-gradient-to-r from-brand-navy to-brand-navy/90 rounded-3xl p-8 md:p-12 text-center text-white mb-12">
+            <section id="newsletter" className="bg-gradient-to-r from-brand-navy to-brand-navy/90 rounded-3xl p-8 md:p-12 text-center text-white mb-12">
                 <h3 className="text-2xl md:text-3xl font-bold mb-4">Stay Updated</h3>
                 <p className="text-gray-300 mb-6 max-w-lg mx-auto">
                     Get the latest research, analysis, and youth voices delivered to your inbox.
                 </p>
-                <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
-                    <input
-                        type="email"
-                        placeholder="Enter your email"
-                        className="flex-grow px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:bg-white/20 focus:border-brand-cyan outline-none"
-                    />
-                    <button
-                        type="submit"
-                        className="px-6 py-3 rounded-full bg-brand-gold text-brand-navy font-bold hover:bg-brand-cyan transition-colors whitespace-nowrap"
-                    >
-                        Subscribe
-                    </button>
-                </form>
+                {subscribed ? (
+                    <div className="flex items-center justify-center gap-2 text-brand-gold font-medium animate-fadeIn">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Thanks for subscribing! Check your inbox for confirmation.
+                    </div>
+                ) : (
+                    <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" onSubmit={handleNewsletterSubmit}>
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="flex-grow px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:bg-white/20 focus:border-brand-cyan outline-none"
+                        />
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="px-6 py-3 rounded-full bg-brand-gold text-brand-navy font-bold hover:bg-brand-cyan transition-colors whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed"
+                        >
+                            {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                        </button>
+                    </form>
+                )}
             </section>
         </div>
     );
 };
 
 export default Home;
+

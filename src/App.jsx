@@ -8,6 +8,13 @@ import Research from './pages/Research';
 import Voices from './pages/Voices';
 import Contribute from './pages/Contribute';
 import About from './pages/About';
+import NotFound from './pages/NotFound';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import Contact from './pages/Contact';
+import Events from './pages/Events';
+import Careers from './pages/Careers';
+import Accessibility from './pages/Accessibility';
 
 // Admin Layout & Pages
 import AdminLayout from './layouts/AdminLayout';
@@ -28,6 +35,13 @@ function App() {
                     <Route path="voices" element={<Voices />} />
                     <Route path="contribute" element={<Contribute />} />
                     <Route path="about" element={<About />} />
+                    <Route path="privacy" element={<Privacy />} />
+                    <Route path="terms" element={<Terms />} />
+                    <Route path="contact" element={<Contact />} />
+                    <Route path="events" element={<Events />} />
+                    <Route path="careers" element={<Careers />} />
+                    <Route path="accessibility" element={<Accessibility />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
 
                 {/* Admin Routes */}
@@ -44,3 +58,4 @@ function App() {
 }
 
 export default App;
+

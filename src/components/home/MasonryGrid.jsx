@@ -22,7 +22,7 @@ const contentItems = [
         title: 'Why I marched for climate justice in Kampala',
         author: 'Sarah O.',
         tag: 'Activism',
-        image: 'https://images.unsplash.com/photo-1629814361559-05244be8db96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        image: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         height: 'h-96',
         trending: true,
     },
@@ -144,6 +144,7 @@ const MasonryGrid = ({ filter = 'All' }) => {
                             <img
                                 src={item.image}
                                 alt={item.title}
+                                loading="lazy"
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                             />
                             {item.hasPlay && (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Sparkles, Layers, Mic2, User } from 'lucide-react';
+import { Sparkles, Layers, Mic2, PenTool } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -12,12 +12,12 @@ const BottomNav = () => {
 
     // Base classes for nav items
     const baseClasses = "flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300";
-    const activeClasses = "bg-gray-900 text-white shadow-lg scale-105";
-    const inactiveClasses = "text-gray-500 hover:bg-gray-100 hover:text-gray-900";
+    const activeClasses = "bg-brand-cyan text-brand-navy shadow-lg scale-105";
+    const inactiveClasses = "text-gray-300 hover:bg-white/10 hover:text-white";
 
     return (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-auto">
-            <div className="bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl shadow-purple-900/10 rounded-full px-2 py-2 flex gap-1">
+            <div className="bg-brand-navy/95 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/20 rounded-full px-2 py-2 flex gap-1">
 
                 <NavLink
                     to="/"
@@ -52,8 +52,8 @@ const BottomNav = () => {
                     to="/contribute"
                     className={({ isActive }) => cn(baseClasses, isActive ? activeClasses : inactiveClasses)}
                 >
-                    <User className="w-5 h-5" />
-                    <span className="font-bold text-sm hidden md:block">Profile</span>
+                    <PenTool className="w-5 h-5" />
+                    <span className="font-bold text-sm hidden md:block">Submit</span>
                 </NavLink>
 
             </div>

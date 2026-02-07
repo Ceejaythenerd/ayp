@@ -21,7 +21,7 @@ const Footer = () => {
         connect: [
             { label: 'Contact Us', to: '/contact' },
             { label: 'Submit Research', to: '/contribute' },
-            { label: 'Newsletter', to: '#newsletter' },
+            { label: 'Newsletter', to: '/#newsletter' },
             { label: 'Media Kit', to: '/media' },
         ],
     };
@@ -135,9 +135,9 @@ const Footer = () => {
                 <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
                     <p>© {currentYear} Africa Youth Portal. All rights reserved.</p>
                     <div className="flex gap-6">
-                        <a href="/privacy" className="hover:text-brand-cyan transition-colors">Privacy Policy</a>
-                        <a href="/terms" className="hover:text-brand-cyan transition-colors">Terms of Use</a>
-                        <a href="/accessibility" className="hover:text-brand-cyan transition-colors">Accessibility</a>
+                        <NavLink to="/privacy" className="hover:text-brand-cyan transition-colors">Privacy Policy</NavLink>
+                        <NavLink to="/terms" className="hover:text-brand-cyan transition-colors">Terms of Use</NavLink>
+                        <NavLink to="/accessibility" className="hover:text-brand-cyan transition-colors">Accessibility</NavLink>
                     </div>
                 </div>
             </div>

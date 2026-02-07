@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Menu, X, Home, BookOpen, MessageSquare, PenTool, Info } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 
 const navLinks = [
@@ -13,6 +13,17 @@ const navLinks = [
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/research?q=${encodeURIComponent(searchQuery.trim())}`);
+            setSearchQuery('');
+            setIsMenuOpen(false);
+        }
+    };
 
     return (
         <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-100 transition-all" role="banner">
@@ -53,15 +64,17 @@ const Header = () => {
                         </div>
 
                         {/* Search Bar - Desktop */}
-                        <div className="hidden md:flex bg-gray-100/80 rounded-full px-4 py-2 items-center gap-2 border border-transparent focus-within:border-brand-cyan focus-within:bg-white transition-all">
+                        <form onSubmit={handleSearch} className="hidden md:flex bg-gray-100/80 rounded-full px-4 py-2 items-center gap-2 border border-transparent focus-within:border-brand-cyan focus-within:bg-white transition-all">
                             <Search className="w-4 h-4 text-gray-400" aria-hidden="true" />
                             <input
                                 type="text"
                                 placeholder="Search..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                                 className="bg-transparent outline-none text-sm w-32 lg:w-48 placeholder-gray-400"
                                 aria-label="Search the portal"
                             />
-                        </div>
+                        </form>
 
                         {/* Submit Button - Desktop */}
                         <NavLink
@@ -93,14 +106,16 @@ const Header = () => {
                 <div className="lg:hidden bg-white border-t border-gray-100 animate-fadeIn">
                     <div className="max-w-7xl mx-auto px-4 py-4">
                         {/* Mobile Search */}
-                        <div className="flex bg-gray-100 rounded-xl px-4 py-3 items-center gap-2 mb-4">
+                        <form onSubmit={handleSearch} className="flex bg-gray-100 rounded-xl px-4 py-3 items-center gap-2 mb-4">
                             <Search className="w-5 h-5 text-gray-400" />
                             <input
                                 type="text"
                                 placeholder="Search the portal..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                                 className="bg-transparent outline-none text-sm flex-grow placeholder-gray-400"
                             />
-                        </div>
+                        </form>
 
                         {/* Mobile Nav Links */}
                         <nav className="space-y-1" role="navigation" aria-label="Mobile navigation">

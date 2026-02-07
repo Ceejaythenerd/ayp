@@ -2,11 +2,12 @@ import React from 'react';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 import BottomNav from '../components/common/BottomNav';
+import ScrollToTop from '../components/common/ScrollToTop';
 import { Outlet } from 'react-router-dom';
 
 const MainLayout = () => {
     return (
-        <div className="min-h-screen text-gray-900 bg-slate-50 relative selection:bg-purple-200 selection:text-purple-900 overflow-x-hidden font-sans">
+        <div className="min-h-screen text-gray-900 bg-slate-50 relative selection:bg-brand-cyan/30 selection:text-brand-navy overflow-x-hidden font-sans">
 
             {/* Gradient Background Blobs - Global */}
             <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -17,12 +18,13 @@ const MainLayout = () => {
 
             <Header />
 
-            <main className="pb-8">
+            <main className="pb-24 md:pb-8" id="main-content">
                 <Outlet />
             </main>
 
             <Footer />
 
+            <ScrollToTop />
             <BottomNav />
 
         </div>

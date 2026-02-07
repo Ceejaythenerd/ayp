@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Search, Filter, Download, Bookmark, Eye, ChevronDown, X, Share2 } from 'lucide-react';
 import ShareButtons from '../components/common/ShareButtons';
 
@@ -83,11 +84,20 @@ const topics = ['All', 'Employment', 'Technology', 'Climate', 'Education', 'Gove
 const years = ['All', '2026', '2025', '2024', '2023', '2022'];
 
 const Research = () => {
+    const [searchParams] = useSearchParams();
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [selectedTopic, setSelectedTopic] = useState('All');
     const [selectedYear, setSelectedYear] = useState('All');
     const [showFilters, setShowFilters] = useState(false);
+
+    // Initialize search from URL query params
+    useEffect(() => {
+        const query = searchParams.get('q');
+        if (query) {
+            setSearchQuery(query);
+        }
+    }, [searchParams]);
 
     // Filter documents based on search and filters
     const filteredDocs = sampleDocuments.filter(doc => {
@@ -189,6 +199,7 @@ const Research = () => {
                             value={selectedCategory}
                             onChange={(e) => setSelectedCategory(e.target.value)}
                             className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white"
+                            aria-label="Filter by document type"
                         >
                             {categories.map(cat => (
                                 <option key={cat} value={cat}>{cat === 'All' ? 'All Types' : cat}</option>
@@ -198,9 +209,20 @@ const Research = () => {
                             value={selectedTopic}
                             onChange={(e) => setSelectedTopic(e.target.value)}
                             className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white"
+                            aria-label="Filter by topic"
                         >
                             {topics.map(topic => (
                                 <option key={topic} value={topic}>{topic === 'All' ? 'All Topics' : topic}</option>
+                            ))}
+                        </select>
+                        <select
+                            value={selectedYear}
+                            onChange={(e) => setSelectedYear(e.target.value)}
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white"
+                            aria-label="Filter by year"
+                        >
+                            {years.map(year => (
+                                <option key={year} value={year}>{year === 'All' ? 'All Years' : year}</option>
                             ))}
                         </select>
                     </div>

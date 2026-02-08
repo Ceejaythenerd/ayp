@@ -87,7 +87,7 @@ const Voices = () => {
         <div className="max-w-7xl mx-auto px-4 py-12 fade-in">
             {/* Header */}
             <div className="text-center mb-12">
-                <h1 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-brand-navy via-brand-gold to-brand-cyan">
+                <h1 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-500">
                     Youth Voices
                 </h1>
                 <p className="text-xl text-gray-600 max-w-2xl mx-auto">

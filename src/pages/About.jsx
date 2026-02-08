@@ -26,7 +26,7 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-4 py-12 fade-in">
             {/* Hero Section */}
             <section className="text-center mb-20">
-                <h1 className="text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-brand-navy via-brand-gold to-brand-cyan">
+                <h1 className="text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-500">
                     About Africa Youth Portal
                 </h1>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
